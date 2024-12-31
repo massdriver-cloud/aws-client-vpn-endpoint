@@ -1,0 +1,138 @@
+# This file will be used to generate all of the schema-*.json files in a bundle
+schema: draft-07
+name: "aws-client-vpn-endpoint"
+description: "This module sets up an AWS Client VPN for securely connecting remote users to resources in a VPC, using mutual authentication with self-signed certificates."
+source_url: github.com/massdriver-cloud/aws-client-vpn-endpoint
+access: private
+type: infrastructure
+
+steps:
+  - path: src
+    provisioner: opentofu
+
+params:
+  required:
+    - network
+    - logging
+  properties:
+    network:
+      title: Network Configuration
+      type: object
+      properties:
+        automatic:
+          title: Automatically Select CIDR
+          description: Automatically select CIDR range for VPN addresses that doesn't conflict with other VPCs in the region.
+          type: boolean
+          default: true
+          $md.immutable: true
+      dependencies:
+        automatic:
+          oneOf:
+            - properties:
+                automatic:
+                  const: true
+                mask:
+                  title: VPN IP Address Range Mask
+                  type: integer
+                  description: Select the number of IP addresses to allocate for the VPN
+                  $md.immutable: true
+                  default: 22
+                  oneOf:
+                    - const: 12
+                      title: 1M IP Addresses
+                    - const: 13
+                      title: 512k IP Addresses
+                    - const: 14
+                      title: 256k IP Addresses
+                    - const: 15
+                      title: 128k IP Addresses
+                    - const: 16
+                      title: 64k IP Addresses
+                    - const: 17
+                      title: 32k IP Addresses
+                    - const: 18
+                      title: 16k IP Addresses
+                    - const: 19
+                      title: 8k IP Addresses
+                    - const: 20
+                      title: 4k IP Addresses
+                    - const: 21
+                      title: 2k IP Addresses
+                    - const: 22
+                      title: 1k IP Addresses
+              required:
+                - automatic
+                - mask
+            - properties:
+                automatic:
+                  const: false
+                cidr:
+                  title: VPN IP Address Range
+                  type: string
+                  description: Enter a CIDR range to use for for the VPN.
+                  $md.immutable: true
+                  pattern: ^(?:10\.(?:[0-9]|[0-9]{2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])|172\.(?:1[6-9]|2[0-9]|3[0-1])|192\.168)(?:\.(?:[0-9]|[0-9]{2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])){2}(?:/(?:1[2-9]|2[0-2]))$
+                  message:
+                    pattern: Range must be from private networking space (10.X.X.X, 172.16-31.X.X, 192.168.X.X).
+              required:
+                - automatic
+                - cidr
+    logging:
+      type: object
+      title: Logging
+      required:
+        - enable
+      properties:
+        enable:
+          type: boolean
+          title: Enable logging
+          default: false
+      dependencies:
+        enable:
+          oneOf:
+            - properties:
+                enable:
+                  const: false
+            - properties:
+                enable:
+                  const: true
+                retention_days:
+                  type: integer
+                  title: Retention days
+                  default: 30
+                  enum: [7, 30, 60, 90, 180, 365]
+              required:
+                - retention_days
+
+
+# schema-connections.json
+# Named list of input connections (artifacts) (map[name]artifact)
+connections:
+  required:
+  - aws_authentication
+  - vpc
+  properties:
+    aws_authentication:
+      $ref: massdriver/aws-iam-role
+    vpc:
+      $ref: massdriver/aws-vpc
+
+
+# schema-artifacts.json
+# Named list of output artifacts  (map[name]artifact)
+artifacts:
+  properties: {}
+  # required:
+  #   - network
+  # properties:
+  #   network:
+  #     $ref: massdriver/aws-vpc
+
+# schema-ui.json
+# List of form customizations for params-schema
+# learn more about widgets & fields: https://docs.massdriver.cloud/bundles/custom-widgets-and-fields
+ui:
+  ui:order:
+    - network
+    - logging
+    - "*"
