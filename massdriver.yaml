@@ -1,7 +1,6 @@
-# This file will be used to generate all of the schema-*.json files in a bundle
 schema: draft-07
-name: "aws-client-vpn-endpoint"
-description: "This module sets up an AWS Client VPN for securely connecting remote users to resources in a VPC, using mutual authentication with self-signed certificates."
+name: aws-client-vpn-endpoint
+description: This module sets up an AWS Client VPN for securely connecting remote users to resources in a VPC, using mutual authentication with self-signed certificates.
 source_url: github.com/massdriver-cloud/aws-client-vpn-endpoint
 access: private
 type: infrastructure
@@ -100,39 +99,35 @@ params:
                   type: integer
                   title: Retention days
                   default: 30
-                  enum: [7, 30, 60, 90, 180, 365]
+                  enum:
+                    - 7
+                    - 30
+                    - 60
+                    - 90
+                    - 180
+                    - 365
               required:
                 - retention_days
 
-
-# schema-connections.json
-# Named list of input connections (artifacts) (map[name]artifact)
 connections:
   required:
-  - aws_authentication
-  - vpc
+    - aws_authentication
+    - vpc
   properties:
     aws_authentication:
       $ref: massdriver/aws-iam-role
     vpc:
       $ref: massdriver/aws-vpc
 
-
-# schema-artifacts.json
-# Named list of output artifacts  (map[name]artifact)
 artifacts:
-  properties: {}
-  # required:
-  #   - network
-  # properties:
-  #   network:
-  #     $ref: massdriver/aws-vpc
+  required:
+    - endpoint
+  properties:
+    endpoint:
+      $ref: lacore/aws-client-vpn-endpoint
 
-# schema-ui.json
-# List of form customizations for params-schema
-# learn more about widgets & fields: https://docs.massdriver.cloud/bundles/custom-widgets-and-fields
 ui:
   ui:order:
     - network
     - logging
-    - "*"
+    - '*'

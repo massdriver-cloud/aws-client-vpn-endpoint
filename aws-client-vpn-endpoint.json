@@ -1,0 +1,108 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$md": {
+    "access": "private",
+    "name": "aws-client-vpn-endpoint"
+  },
+  "type": "object",
+  "title": "AWS Client VPN Endpoint",
+  "description": "",
+  "additionalProperties": false,
+  "required": [
+    "data",
+    "specs"
+  ],
+  "properties": {
+    "data": {
+      "title": "Artifact Data",
+      "type": "object",
+      "required": [
+        "infrastructure",
+        "authentication"
+      ],
+      "properties": {
+        "infrastructure": {
+          "title": "Infrastructure configuration",
+          "required": [
+            "arn",
+            "dns_name"
+          ],
+          "type": "object",
+          "properties": {
+            "arn": {
+              "$schema": "http://json-schema.org/draft-07/schema",
+              "type": "string",
+              "title": "AWS ARN",
+              "description": "Amazon Resource Name",
+              "examples": [
+                "arn:aws:rds::ACCOUNT_NUMBER:db/prod",
+                "arn:aws:ec2::ACCOUNT_NUMBER:vpc/vpc-foo"
+              ],
+              "pattern": "^arn:aws:[a-zA-Z0-9._-]*:[a-zA-Z0-9._-]*:(?:[0-9]{12})?:[a-zA-Z0-9/:._-]+$",
+              "message": {
+                "pattern": "Correct format of an arn described here: https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html"
+              }
+            },
+            "dns_name": {
+              "$schema": "http://json-schema.org/draft-07/schema",
+              "type": "string",
+              "title": "AWS ARN",
+              "description": "Amazon Resource Name",
+              "examples": [
+                "my-endpoint.prod.clientvpn.us-west-1.amazonaws.com"
+              ],
+              "pattern": "^[a-z0-9-]+\\.prod\\.clientvpn\\.[a-z]{2}\\-[a-z]+\\-[0-9]{1}\\.amazonaws.com$",
+              "message": {
+                "pattern": ""
+              }
+            }
+          }
+        },
+        "authentication": {
+          "type": "object",
+          "title": "Authentication",
+          "required": [
+            "ca_private_key_pem",
+            "ca_certificate_pem"
+          ],
+          "properties": {
+            "ca_private_key_pem": {
+              "type": "string",
+              "title": "CA Private Key",
+              "description": "Certificate Authority Private Key (.pem)"
+            },
+            "ca_certificate_pem": {
+              "type": "string",
+              "title": "CA Certificate",
+              "description": "Certificate Authority Certificate (.pem)"
+            }
+          }
+        }
+      }
+    },
+    "specs": {
+      "title": "Artifact Specs",
+      "type": "object",
+      "properties": {
+        "aws": {
+          "$schema": "http://json-schema.org/draft-07/schema",
+          "type": "object",
+          "title": "AWS Artifact Specs",
+          "description": "",
+          "required": [],
+          "properties": {
+            "region": {
+              "$schema": "http://json-schema.org/draft-07/schema",
+              "type": "string",
+              "title": "Region",
+              "description": "AWS Region to provision in.",
+              "examples": [
+                "us-west-2"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
