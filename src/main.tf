@@ -40,14 +40,3 @@ resource "aws_ec2_client_vpn_authorization_rule" "rule" {
   target_network_cidr    = data.aws_vpc.lookup.cidr_block
   authorize_all_groups   = true
 }
-
-# data "aws_route_tables" "all" {
-#   vpc_id = local.vpc_id
-# }
-
-# resource "aws_route" "vpn_route" {
-#   for_each               = toset(data.aws_route_tables.all.ids)
-#   route_table_id         = each.key
-#   destination_cidr_block = aws_ec2_client_vpn_endpoint.vpn.client_cidr_block
-#   gateway_id             = aws_ec2_client_vpn_network_association.association.association_id
-# }

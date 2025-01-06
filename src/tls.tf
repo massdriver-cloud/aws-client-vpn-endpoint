@@ -24,10 +24,6 @@ resource "aws_acm_certificate" "ca" {
   private_key      = tls_private_key.ca.private_key_pem
   certificate_body = tls_self_signed_cert.ca.cert_pem
 
-  # options {
-  #   certificate_transparency_logging_preference = "DISABLED"
-  # }
-
   lifecycle {
     create_before_destroy = true
   }
@@ -45,7 +41,6 @@ resource "tls_cert_request" "server" {
     common_name  = "${var.md_metadata.name_prefix}-server"
     organization = var.md_metadata.name_prefix
   }
-  dns_names = ["does.not.matter.invalid"]
 }
 
 resource "tls_locally_signed_cert" "server" {
@@ -65,10 +60,6 @@ resource "aws_acm_certificate" "server" {
   private_key       = tls_private_key.server.private_key_pem
   certificate_body  = tls_locally_signed_cert.server.cert_pem
   certificate_chain = tls_self_signed_cert.ca.cert_pem
-
-  # options {
-  #   certificate_transparency_logging_preference = "DISABLED"
-  # }
 
   lifecycle {
     create_before_destroy = true

@@ -1,4 +1,3 @@
-
 resource "aws_security_group" "vpn" {
   name        = var.md_metadata.name_prefix
   description = "Control traffic from VPN clients"

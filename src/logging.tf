@@ -1,4 +1,3 @@
-
 resource "aws_cloudwatch_log_group" "vpn" {
   count             = var.logging.enable ? 1 : 0
   name              = "/aws/vpn/${var.md_metadata.name_prefix}"
