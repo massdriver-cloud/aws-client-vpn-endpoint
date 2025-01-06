@@ -19,6 +19,7 @@ resource "aws_ec2_client_vpn_endpoint" "vpn" {
   security_group_ids     = [aws_security_group.vpn.id]
   split_tunnel           = var.network.split_tunnel
   dns_servers            = [local.public_subnet_ip]
+
   authentication_options {
     type                       = "certificate-authentication"
     root_certificate_chain_arn = aws_acm_certificate.ca.arn
