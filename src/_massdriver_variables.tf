@@ -66,15 +66,16 @@ variable "vpc" {
 // Auto-generated variable declarations from massdriver.yaml
 variable "logging" {
   type = object({
-    enable        = bool
+    enable         = bool
     retention_days = optional(number)
   })
 }
+// Auto-generated variable declarations from massdriver.yaml
 variable "network" {
   type = object({
-    automatic        = optional(bool)
-    high_availabilty = optional(bool)
-    mask             = optional(number)
-    cidr             = optional(string)
+    automatic    = optional(bool)
+    split_tunnel = optional(bool)
+    mask         = optional(number)
+    cidr         = optional(string)
   })
 }

@@ -35,9 +35,13 @@ Form input parameters for configuring a bundle for deployment.
 <summary>View</summary>
 
 <!-- PARAMS:START -->
+## Properties
 
-**Params coming soon**
-
+- **`logging`** *(object)*
+  - **`enable`** *(boolean)*: Default: `False`.
+- **`network`** *(object)*
+  - **`automatic`** *(boolean)*: Automatically select CIDR range for VPN addresses that doesn't conflict with other VPCs in the region. Default: `True`.
+  - **`split_tunnel`** *(boolean)*: You can use a split-tunnel Client VPN endpoint when you do not want all user traffic to route through the Client VPN endpoint. Default: `True`.
 <!-- PARAMS:END -->
 
 </details>
@@ -50,8 +54,109 @@ Connections from other bundles that this bundle depends on.
 <summary>View</summary>
 
 <!-- CONNECTIONS:START -->
+## Properties
 
-**Connections coming soon**
+- **`aws_authentication`** *(object)*: . Cannot contain additional properties.
+  - **`data`** *(object)*
+    - **`arn`** *(string)*: Amazon Resource Name.
+
+      Examples:
+      ```json
+      "arn:aws:rds::ACCOUNT_NUMBER:db/prod"
+      ```
+
+      ```json
+      "arn:aws:ec2::ACCOUNT_NUMBER:vpc/vpc-foo"
+      ```
+
+    - **`external_id`** *(string)*: An external ID is a piece of data that can be passed to the AssumeRole API of the Security Token Service (STS). You can then use the external ID in the condition element in a role's trust policy, allowing the role to be assumed only when a certain value is present in the external ID.
+  - **`specs`** *(object)*
+    - **`aws`** *(object)*: .
+      - **`region`** *(string)*: AWS Region to provision in.
+
+        Examples:
+        ```json
+        "us-west-2"
+        ```
+
+- **`vpc`** *(object)*: . Cannot contain additional properties.
+  - **`data`** *(object)*
+    - **`infrastructure`** *(object)*
+      - **`arn`** *(string)*: Amazon Resource Name.
+
+        Examples:
+        ```json
+        "arn:aws:rds::ACCOUNT_NUMBER:db/prod"
+        ```
+
+        ```json
+        "arn:aws:ec2::ACCOUNT_NUMBER:vpc/vpc-foo"
+        ```
+
+      - **`cidr`** *(string)*
+
+        Examples:
+        ```json
+        "10.100.0.0/16"
+        ```
+
+        ```json
+        "192.24.12.0/22"
+        ```
+
+      - **`internal_subnets`** *(array)*
+        - **Items** *(object)*: AWS VCP Subnet.
+          - **`arn`** *(string)*: Amazon Resource Name.
+
+            Examples:
+            ```json
+            "arn:aws:rds::ACCOUNT_NUMBER:db/prod"
+            ```
+
+            ```json
+            "arn:aws:ec2::ACCOUNT_NUMBER:vpc/vpc-foo"
+            ```
+
+
+          Examples:
+      - **`private_subnets`** *(array)*
+        - **Items** *(object)*: AWS VCP Subnet.
+          - **`arn`** *(string)*: Amazon Resource Name.
+
+            Examples:
+            ```json
+            "arn:aws:rds::ACCOUNT_NUMBER:db/prod"
+            ```
+
+            ```json
+            "arn:aws:ec2::ACCOUNT_NUMBER:vpc/vpc-foo"
+            ```
+
+
+          Examples:
+      - **`public_subnets`** *(array)*
+        - **Items** *(object)*: AWS VCP Subnet.
+          - **`arn`** *(string)*: Amazon Resource Name.
+
+            Examples:
+            ```json
+            "arn:aws:rds::ACCOUNT_NUMBER:db/prod"
+            ```
+
+            ```json
+            "arn:aws:ec2::ACCOUNT_NUMBER:vpc/vpc-foo"
+            ```
+
+
+          Examples:
+  - **`specs`** *(object)*
+    - **`aws`** *(object)*: .
+      - **`region`** *(string)*: AWS Region to provision in.
+
+        Examples:
+        ```json
+        "us-west-2"
+        ```
 
 <!-- CONNECTIONS:END -->
 
@@ -65,8 +170,40 @@ Resources created by this bundle that can be connected to other bundles.
 <summary>View</summary>
 
 <!-- ARTIFACTS:START -->
+## Properties
 
-**Artifacts coming soon**
+- **`endpoint`** *(object)*: . Cannot contain additional properties.
+  - **`data`** *(object)*
+    - **`authentication`** *(object)*
+      - **`ca_certificate_pem`** *(string)*: Certificate Authority Certificate (.pem).
+      - **`ca_private_key_pem`** *(string)*: Certificate Authority Private Key (.pem).
+    - **`infrastructure`** *(object)*
+      - **`arn`** *(string)*: Amazon Resource Name.
+
+        Examples:
+        ```json
+        "arn:aws:rds::ACCOUNT_NUMBER:db/prod"
+        ```
+
+        ```json
+        "arn:aws:ec2::ACCOUNT_NUMBER:vpc/vpc-foo"
+        ```
+
+      - **`dns_name`** *(string)*: Amazon Resource Name.
+
+        Examples:
+        ```json
+        "my-endpoint.prod.clientvpn.us-west-1.amazonaws.com"
+        ```
+
+  - **`specs`** *(object)*
+    - **`aws`** *(object)*: .
+      - **`region`** *(string)*: AWS Region to provision in.
+
+        Examples:
+        ```json
+        "us-west-2"
+        ```
 
 <!-- ARTIFACTS:END -->
 

@@ -18,6 +18,11 @@ params:
       title: Network Configuration
       type: object
       properties:
+        split_tunnel:
+          title: Enable split tunneling
+          description: You can use a split-tunnel Client VPN endpoint when you do not want all user traffic to route through the Client VPN endpoint.
+          type: boolean
+          default: true
         automatic:
           title: Automatically Select CIDR
           description: Automatically select CIDR range for VPN addresses that doesn't conflict with other VPCs in the region.
@@ -131,3 +136,8 @@ ui:
     - network
     - logging
     - '*'
+  network:
+    ui:order:
+      - split_tunnel
+      - automatic
+      - '*'
