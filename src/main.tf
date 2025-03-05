@@ -14,7 +14,7 @@ data "aws_subnet" "public" {
 
 resource "aws_ec2_client_vpn_endpoint" "vpn" {
   vpc_id                 = local.vpc_id
-  client_cidr_block      = var.network.cidr
+  client_cidr_block      = local.cidr
   server_certificate_arn = aws_acm_certificate.server.arn
   security_group_ids     = [aws_security_group.vpn.id]
   split_tunnel           = var.network.split_tunnel

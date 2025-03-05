@@ -41,6 +41,7 @@ resource "tls_cert_request" "server" {
     common_name  = "${var.md_metadata.name_prefix}-server"
     organization = var.md_metadata.name_prefix
   }
+  dns_names = ["does.not.matter.invalid"]
 }
 
 resource "tls_locally_signed_cert" "server" {
