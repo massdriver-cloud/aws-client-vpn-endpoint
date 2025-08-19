@@ -3,7 +3,6 @@ name: aws-client-vpn-endpoint
 version: 1.0.0
 description: This module sets up an AWS Client VPN for securely connecting remote users to resources in a VPC, using mutual authentication with self-signed certificates.
 source_url: https://github.com/massdriver-cloud/aws-client-vpn-endpoint
-type: application
 steps:
 - path: src
   provisioner: opentofu
