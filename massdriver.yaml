@@ -111,9 +111,9 @@ connections:
   - vpc
   properties:
     aws_authentication:
-      "$ref": massdriver/aws-iam-role
+      "$ref": aws-iam-role
     vpc:
-      "$ref": massdriver/aws-vpc
+      "$ref": aws-vpc
 artifacts:
   properties: {}
 ui:
